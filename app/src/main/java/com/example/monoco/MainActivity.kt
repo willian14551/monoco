@@ -21,7 +21,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.savedstate.SavedState
 import com.example.monoco.ui.theme.MonocoTheme
 
 class MainActivity : ComponentActivity(){
@@ -32,8 +31,8 @@ class MainActivity : ComponentActivity(){
         setContent{
             MonocoTheme{
                 Scaffold(modifier = Modifier.fillMaxSize()) {
-                    innerPadding -> WelcomeScreen(
-                        modifier = Modifier.padding(innerPadding)
+                    espacamentoInterno -> TelaBoasVindas(
+                        modifier = Modifier.padding(espacamentoInterno)
                     )
                 }
             }
@@ -42,7 +41,7 @@ class MainActivity : ComponentActivity(){
 }
 
 @Composable
-fun WelcomeScreen(modifier: Modifier = Modifier) {
+fun TelaBoasVindas(modifier: Modifier = Modifier) {
     Column (
         modifier = modifier
             .fillMaxSize()
@@ -64,7 +63,7 @@ fun WelcomeScreen(modifier: Modifier = Modifier) {
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         Button(
             onClick = {}
@@ -76,8 +75,8 @@ fun WelcomeScreen(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun WelcomeScreenPreview(){
+fun PreviaTelaBoasVindas(){
     MonocoTheme {
-        WelcomeScreen()
+        TelaBoasVindas()
     }
 }
