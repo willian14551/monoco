@@ -61,7 +61,6 @@ fun MonocoApp(modifier: Modifier = Modifier) {
                         controladorNavegacao.navigate(Rotas.CADASTRO)
                     },
                     aoEntrar = { _, _ ->
-                        // Na próxima etapa, esta ação será ligada ao backend.
                         Toast.makeText(
                             contexto,
                             "A autenticação ainda não está conectada ao servidor.",

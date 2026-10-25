@@ -110,7 +110,7 @@ fun TelaCadastro(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        AvisoLocal("As contas online ainda não estão disponíveis. Este formulário permite conferir os campos; nenhuma conta será criada nesta versão.")
+        AvisoLocal("As contas online ainda não estão disponíveis.")
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -218,7 +218,7 @@ fun TelaCadastro(
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
-                text = "Campos válidos. A criação da conta estará disponível com o serviço online.",
+                text = "Campos válidos. Ainda não disponivel.",
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.bodyMedium
             )

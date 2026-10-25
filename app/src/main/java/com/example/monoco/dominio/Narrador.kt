@@ -7,8 +7,6 @@ import kotlinx.coroutines.flow.flow
 interface Narrador {
     fun narrar(contexto: ContextoNarracao): Flow<String>
 }
-
-/** Roteiro local para testar a interface. Não chama uma IA e não precisa de chave. */
 class NarradorDemonstracao : Narrador {
     override fun narrar(contexto: ContextoNarracao): Flow<String> = flow {
         val nome = contexto.camposPersonagem["Nome"] ?: "Seu personagem"
