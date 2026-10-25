@@ -20,6 +20,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -29,6 +30,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.monoco.ui.theme.MonocoTheme
+import com.example.monoco.ui.componentes.AvisoLocal
 
 private const val TAMANHO_MINIMO_SENHA = 8
 
@@ -40,8 +42,8 @@ fun TelaCadastro(
 ) {
     var nome by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
-    var senha by rememberSaveable { mutableStateOf("") }
-    var confirmacaoSenha by rememberSaveable { mutableStateOf("") }
+    var senha by remember { mutableStateOf("") }
+    var confirmacaoSenha by remember { mutableStateOf("") }
 
     var erroNome by rememberSaveable { mutableStateOf<String?>(null) }
     var erroEmail by rememberSaveable { mutableStateOf<String?>(null) }
@@ -107,6 +109,10 @@ fun TelaCadastro(
         )
 
         Spacer(modifier = Modifier.height(24.dp))
+
+        AvisoLocal("As contas online ainda não estão disponíveis. Este formulário permite conferir os campos; nenhuma conta será criada nesta versão.")
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = nome,
@@ -212,7 +218,7 @@ fun TelaCadastro(
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
-                text = "Dados válidos.",
+                text = "Campos válidos. A criação da conta estará disponível com o serviço online.",
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.bodyMedium
             )

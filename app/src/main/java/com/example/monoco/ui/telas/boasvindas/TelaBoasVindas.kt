@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +22,8 @@ import com.example.monoco.ui.theme.MonocoTheme
 @Composable
 fun TelaBoasVindas(
     aoComecarAventura: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    aoEntrar: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -48,6 +50,12 @@ fun TelaBoasVindas(
 
         Button(onClick = aoComecarAventura) {
             Text(text = "Começar aventura")
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        TextButton(onClick = aoEntrar) {
+            Text(text = "Já tenho conta")
         }
     }
 }
