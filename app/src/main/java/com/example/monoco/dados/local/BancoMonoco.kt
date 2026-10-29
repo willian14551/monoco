@@ -17,6 +17,12 @@ abstract class BancoMonoco : RoomDatabase() {
     companion object {
         @Volatile private var instancia: BancoMonoco? = null
 
+        fun paraConta(contexto: Context, usuarioId: Long, servidor: String): BancoMonoco {
+            val origem=java.security.MessageDigest.getInstance("SHA-256").digest(servidor.toByteArray())
+                .take(16).joinToString("") { "%02x".format(it) }
+            return Room.databaseBuilder(contexto.applicationContext,BancoMonoco::class.java,"monoco-conta-$origem-$usuarioId.db").build()
+        }
+
         fun obter(contexto: Context): BancoMonoco = instancia ?: synchronized(this) {
             instancia ?: Room.databaseBuilder(
                 contexto.applicationContext, BancoMonoco::class.java, "monoco.db"

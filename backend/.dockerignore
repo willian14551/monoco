@@ -1,0 +1,8 @@
+build
+.gradle
+.kotlin
+target
+logs
+dados
+.env
+.git

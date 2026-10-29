@@ -1,0 +1,9 @@
+/target/
+/dados/
+.env
+*.log
+
+/build/
+/.gradle/
+/.kotlin/
+/logs/

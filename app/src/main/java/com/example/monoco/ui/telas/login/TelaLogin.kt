@@ -40,7 +40,7 @@ fun TelaLogin(
     modifier: Modifier = Modifier
 ) {
     var email by rememberSaveable { mutableStateOf("") }
-    // A senha fica somente na memória da tela, sem entrar no estado salvo.
+
     var senha by remember { mutableStateOf("") }
 
     var erroEmail by rememberSaveable { mutableStateOf<String?>(null) }

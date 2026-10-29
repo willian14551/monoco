@@ -17,5 +17,5 @@ private val coresMonoco = darkColorScheme(
 
 @Composable
 fun MonocoTheme(content: @Composable () -> Unit) {
-    MaterialTheme(colorScheme = coresMonoco, typography = Typography, content = content)
+    MaterialTheme(colorScheme = coresMonoco, typography = TipografiaMonoco, content = content)
 }

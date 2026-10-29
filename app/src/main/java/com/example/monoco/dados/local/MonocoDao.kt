@@ -54,6 +54,14 @@ interface MonocoDao {
     @Query("SELECT COUNT(*) FROM campanhas WHERE personagemId = :personagemId")
     suspend fun contarCampanhasDoPersonagem(personagemId: Long): Int
 
+    @Upsert suspend fun atualizarPersonagens(itens: List<Personagem>)
+    @Upsert suspend fun atualizarLivros(itens: List<Livro>)
+    @Upsert suspend fun atualizarCampanhas(itens: List<Campanha>)
+    @Upsert suspend fun atualizarMensagens(itens: List<Mensagem>)
+    @Upsert suspend fun atualizarMemorias(itens: List<Memoria>)
+    @Query("DELETE FROM memorias WHERE campanhaId = :cid")
+    suspend fun limparMemorias(cid: Long)
+
     @Upsert suspend fun salvarPersonagem(personagem: Personagem): Long
     @Upsert suspend fun salvarMemoria(memoria: Memoria): Long
     @Upsert suspend fun salvarPerfil(perfil: PerfilLocal)

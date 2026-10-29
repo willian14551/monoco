@@ -1,0 +1,1655 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Monoco API",
+    "description": "Cadastre-se, faça login e use o token em Authorize. Datas são milissegundos Unix.",
+    "version": "0.3.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/api",
+      "description": "Monoco local"
+    }
+  ],
+  "security": [
+    {
+      "bearer": []
+    }
+  ],
+  "paths": {
+    "/personagens/{personagemId}": {
+      "get": {
+        "tags": [
+          "personagem-controlador"
+        ],
+        "operationId": "buscar",
+        "parameters": [
+          {
+            "name": "personagemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonagemSaida"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "personagem-controlador"
+        ],
+        "operationId": "editar",
+        "parameters": [
+          {
+            "name": "personagemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonagemEntrada"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonagemSaida"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "personagem-controlador"
+        ],
+        "operationId": "excluir",
+        "parameters": [
+          {
+            "name": "personagemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/perfil": {
+      "get": {
+        "tags": [
+          "conta-controlador"
+        ],
+        "operationId": "buscarPerfil",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PerfilSaida"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "conta-controlador"
+        ],
+        "operationId": "editarPerfil",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PerfilEntrada"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PerfilSaida"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/perfil/senha": {
+      "put": {
+        "tags": [
+          "conta-controlador"
+        ],
+        "operationId": "alterarSenha",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SenhaEntrada"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/campanhas/{campanhaId}/memorias/{memoriaId}": {
+      "get": {
+        "tags": [
+          "memoria-controlador"
+        ],
+        "operationId": "buscar_1",
+        "parameters": [
+          {
+            "name": "campanhaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          },
+          {
+            "name": "memoriaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoriaSaida"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "memoria-controlador"
+        ],
+        "operationId": "editar_1",
+        "parameters": [
+          {
+            "name": "campanhaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          },
+          {
+            "name": "memoriaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoriaEntrada"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoriaSaida"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "memoria-controlador"
+        ],
+        "operationId": "excluir_1",
+        "parameters": [
+          {
+            "name": "campanhaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          },
+          {
+            "name": "memoriaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/usuarios": {
+      "post": {
+        "tags": [
+          "conta-controlador"
+        ],
+        "operationId": "cadastrar",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Cadastro"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PerfilSaida"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/sessoes": {
+      "post": {
+        "tags": [
+          "conta-controlador"
+        ],
+        "operationId": "entrar",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sessao"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "tags": [
+          "conta-controlador"
+        ],
+        "operationId": "sair",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/personagens": {
+      "get": {
+        "tags": [
+          "personagem-controlador"
+        ],
+        "operationId": "listar",
+        "parameters": [
+          {
+            "name": "busca",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "tamanho",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            }
+          },
+          {
+            "name": "ordenarPor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "nome"
+            }
+          },
+          {
+            "name": "direcao",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "asc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginaPersonagemSaida"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "personagem-controlador"
+        ],
+        "operationId": "criar",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonagemEntrada"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonagemSaida"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campanhas": {
+      "get": {
+        "tags": [
+          "campanha-controlador"
+        ],
+        "operationId": "listar_1",
+        "parameters": [
+          {
+            "name": "busca",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "tamanho",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            }
+          },
+          {
+            "name": "ordenarPor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ultimaAtividade"
+            }
+          },
+          {
+            "name": "direcao",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "desc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginaCampanhaSaida"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "campanha-controlador"
+        ],
+        "operationId": "criar_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampanhaEntrada"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampanhaSaida"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campanhas/{campanhaId}/narracoes": {
+      "post": {
+        "tags": [
+          "narracao-controlador"
+        ],
+        "operationId": "narrarProgressivamente",
+        "parameters": [
+          {
+            "name": "campanhaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/SseEmitter"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campanhas/{campanhaId}/mensagens": {
+      "get": {
+        "tags": [
+          "campanha-controlador"
+        ],
+        "operationId": "listarMensagens",
+        "parameters": [
+          {
+            "name": "campanhaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          },
+          {
+            "name": "antesDe",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 30
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Historico"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "campanha-controlador"
+        ],
+        "operationId": "salvarAcao",
+        "parameters": [
+          {
+            "name": "campanhaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcaoEntrada"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MensagemSaida"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campanhas/{campanhaId}/memorias": {
+      "get": {
+        "tags": [
+          "memoria-controlador"
+        ],
+        "operationId": "listar_2",
+        "parameters": [
+          {
+            "name": "campanhaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          },
+          {
+            "name": "ativa",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "tamanho",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginaMemoriaSaida"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "memoria-controlador"
+        ],
+        "operationId": "criar_2",
+        "parameters": [
+          {
+            "name": "campanhaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoriaEntrada"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoriaSaida"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/configuracao": {
+      "get": {
+        "tags": [
+          "configuracao-controlador"
+        ],
+        "operationId": "buscar_2",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfiguracaoSaida"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "configuracao-controlador"
+        ],
+        "operationId": "atualizar",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfiguracaoEntrada"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfiguracaoSaida"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/saude": {
+      "get": {
+        "tags": [
+          "saude-controlador"
+        ],
+        "operationId": "verificar",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/livros": {
+      "get": {
+        "tags": [
+          "livro-controlador"
+        ],
+        "operationId": "listar_3",
+        "parameters": [
+          {
+            "name": "busca",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "genero",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "tamanho",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            }
+          },
+          {
+            "name": "ordenarPor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "titulo"
+            }
+          },
+          {
+            "name": "direcao",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "asc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginaLivroSaida"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campanhas/{campanhaId}": {
+      "delete": {
+        "tags": [
+          "campanha-controlador"
+        ],
+        "operationId": "excluir_2",
+        "parameters": [
+          {
+            "name": "campanhaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PersonagemEntrada": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "classe": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "atributos": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 5000,
+            "minLength": 0
+          },
+          "historia": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 10000,
+            "minLength": 0
+          },
+          "segredos": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 5000,
+            "minLength": 0
+          },
+          "compartilharNome": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "compartilharClasse": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "compartilharAtributos": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "compartilharHistoria": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "compartilharSegredos": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "nome"
+        ]
+      },
+      "PersonagemSaida": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "classe": {
+            "type": "string"
+          },
+          "atributos": {
+            "type": "string"
+          },
+          "historia": {
+            "type": "string"
+          },
+          "segredos": {
+            "type": "string"
+          },
+          "compartilharNome": {
+            "type": "boolean"
+          },
+          "compartilharClasse": {
+            "type": "boolean"
+          },
+          "compartilharAtributos": {
+            "type": "boolean"
+          },
+          "compartilharHistoria": {
+            "type": "boolean"
+          },
+          "compartilharSegredos": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PerfilEntrada": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 100,
+            "minLength": 2
+          },
+          "email": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "email",
+            "maxLength": 254,
+            "minLength": 0
+          }
+        },
+        "required": [
+          "email",
+          "nome"
+        ]
+      },
+      "PerfilSaida": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "SenhaEntrada": {
+        "type": "object",
+        "properties": {
+          "senhaAtual": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 72,
+            "minLength": 0
+          },
+          "novaSenha": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 72,
+            "minLength": 8
+          }
+        },
+        "required": [
+          "novaSenha",
+          "senhaAtual"
+        ]
+      },
+      "MemoriaEntrada": {
+        "type": "object",
+        "properties": {
+          "titulo": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 120,
+            "minLength": 0
+          },
+          "texto": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 5000,
+            "minLength": 0
+          },
+          "ativa": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "texto",
+          "titulo"
+        ]
+      },
+      "MemoriaSaida": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "campanhaId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "titulo": {
+            "type": "string"
+          },
+          "texto": {
+            "type": "string"
+          },
+          "ativa": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Cadastro": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 100,
+            "minLength": 2
+          },
+          "email": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "email",
+            "maxLength": 254,
+            "minLength": 0
+          },
+          "senha": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 72,
+            "minLength": 8
+          }
+        },
+        "required": [
+          "email",
+          "nome",
+          "senha"
+        ]
+      },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "email",
+            "minLength": 1
+          },
+          "senha": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 72,
+            "minLength": 0
+          }
+        },
+        "required": [
+          "email",
+          "senha"
+        ]
+      },
+      "Sessao": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "expiraEm": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "usuario": {
+            "$ref": "#/components/schemas/PerfilSaida"
+          }
+        }
+      },
+      "CampanhaEntrada": {
+        "type": "object",
+        "properties": {
+          "titulo": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 150,
+            "minLength": 0
+          },
+          "personagemId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          },
+          "livroId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          }
+        },
+        "required": [
+          "livroId",
+          "personagemId",
+          "titulo"
+        ]
+      },
+      "CampanhaSaida": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "titulo": {
+            "type": "string"
+          },
+          "personagemId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "livroId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ultimaAtividade": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "SseEmitter": {
+        "type": "object",
+        "properties": {
+          "timeout": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "AcaoEntrada": {
+        "type": "object",
+        "properties": {
+          "texto": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2000,
+            "minLength": 0
+          },
+          "requisicaoId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "pattern": "[0-9a-fA-F-]{36}"
+          }
+        },
+        "required": [
+          "requisicaoId",
+          "texto"
+        ]
+      },
+      "MensagemSaida": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "campanhaId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "autor": {
+            "type": "string"
+          },
+          "texto": {
+            "type": "string"
+          },
+          "criadaEm": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "interrompida": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ConfiguracaoEntrada": {
+        "type": "object",
+        "properties": {
+          "provedor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "OpenAI|OpenRouter|Demonstracao"
+          },
+          "modelo": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 150,
+            "minLength": 0
+          },
+          "chave": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 512,
+            "minLength": 1
+          },
+          "removerChave": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "tom": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "Aventura|Sombrio|Leve"
+          },
+          "tamanhoResposta": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "Curta|Média|Longa"
+          },
+          "criatividade": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "maximum": 1.0,
+            "minimum": 0.0
+          }
+        }
+      },
+      "ConfiguracaoSaida": {
+        "type": "object",
+        "properties": {
+          "provedor": {
+            "type": "string"
+          },
+          "modelo": {
+            "type": "string"
+          },
+          "chaveConfigurada": {
+            "type": "boolean"
+          },
+          "finalChave": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "tom": {
+            "type": "string"
+          },
+          "tamanhoResposta": {
+            "type": "string"
+          },
+          "criatividade": {
+            "type": "number",
+            "format": "double"
+          },
+          "demonstracaoPermitida": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PaginaPersonagemSaida": {
+        "type": "object",
+        "properties": {
+          "conteudo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonagemSaida"
+            }
+          },
+          "pagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tamanho": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ultima": {
+            "type": "boolean"
+          }
+        }
+      },
+      "LivroSaida": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "titulo": {
+            "type": "string"
+          },
+          "genero": {
+            "type": "string"
+          },
+          "descricao": {
+            "type": "string"
+          },
+          "premissa": {
+            "type": "string"
+          },
+          "regras": {
+            "type": "string"
+          },
+          "abertura": {
+            "type": "string"
+          },
+          "duracao": {
+            "type": "string"
+          }
+        }
+      },
+      "PaginaLivroSaida": {
+        "type": "object",
+        "properties": {
+          "conteudo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LivroSaida"
+            }
+          },
+          "pagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tamanho": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ultima": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PaginaCampanhaSaida": {
+        "type": "object",
+        "properties": {
+          "conteudo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CampanhaSaida"
+            }
+          },
+          "pagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tamanho": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ultima": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Historico": {
+        "type": "object",
+        "properties": {
+          "mensagens": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MensagemSaida"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "temAnteriores": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PaginaMemoriaSaida": {
+        "type": "object",
+        "properties": {
+          "conteudo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemoriaSaida"
+            }
+          },
+          "pagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tamanho": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ultima": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

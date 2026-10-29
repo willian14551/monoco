@@ -2,7 +2,6 @@ package com.example.monoco.dados
 
 import com.example.monoco.dados.local.Livro
 
-// Aventuras originais de exemplo. Cada livro já oferece cenário, regras e abertura.
 val livrosIniciais = listOf(
     Livro(
         id = 1, titulo = "O Farol das Marés", genero = "Fantasia",

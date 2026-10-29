@@ -1,0 +1,551 @@
+{
+  "info": {
+    "name": "Monoco — 26 operações revisadas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Exemplos para execução individual. Primeiro cadastre e faça login. Criações de personagem, campanha e memória capturam IDs. Não execute a coleção inteira sem escolher a ordem: troca de senha e logout invalidam sessões, e exclusões removem os dados dos exemplos. A narração retorna SSE. PATCH de configuração aceita preferências, provedor/modelo/chave ou removerChave=true, como explicado no README."
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080/api"
+    },
+    {
+      "key": "email",
+      "value": "aventureiro@exemplo.com"
+    },
+    {
+      "key": "senha",
+      "value": "senha12345"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "personagem_id",
+      "value": ""
+    },
+    {
+      "key": "campanha_id",
+      "value": ""
+    },
+    {
+      "key": "memoria_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "GET /personagens/{personagemId}",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/personagens/{{personagem_id}}"
+      }
+    },
+    {
+      "name": "PUT /personagens/{personagemId}",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/personagens/{{personagem_id}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Aurel Falken\",\n  \"classe\": \"Paladino\",\n  \"compartilharSegredos\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "DELETE /personagens/{personagemId}",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/personagens/{{personagem_id}}"
+      }
+    },
+    {
+      "name": "GET /perfil",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/perfil"
+      }
+    },
+    {
+      "name": "PUT /perfil",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/perfil",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Willian\",\n  \"email\": \"{{email}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "PUT /perfil/senha",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/perfil/senha",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"senhaAtual\": \"{{senha}}\",\n  \"novaSenha\": \"novaSenha12345\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "GET /campanhas/{campanhaId}/memorias/{memoriaId}",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/campanhas/{{campanha_id}}/memorias/{{memoria_id}}"
+      }
+    },
+    {
+      "name": "PUT /campanhas/{campanhaId}/memorias/{memoriaId}",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/campanhas/{{campanha_id}}/memorias/{{memoria_id}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Lia\",\n  \"texto\": \"Lia é uma cartógrafa aliada.\",\n  \"ativa\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "DELETE /campanhas/{campanhaId}/memorias/{memoriaId}",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/campanhas/{{campanha_id}}/memorias/{{memoria_id}}"
+      }
+    },
+    {
+      "name": "POST /usuarios",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/usuarios",
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Aventureiro\",\n  \"email\": \"{{email}}\",\n  \"senha\": \"{{senha}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "POST /sessoes",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/sessoes",
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"senha\": \"{{senha}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code >= 200 && pm.response.code < 300) {",
+              "  pm.collectionVariables.set('token', pm.response.json().token);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "DELETE /sessoes",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/sessoes"
+      }
+    },
+    {
+      "name": "GET /personagens",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/personagens"
+      }
+    },
+    {
+      "name": "POST /personagens",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/personagens",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Falken\",\n  \"classe\": \"Paladino\",\n  \"compartilharSegredos\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code >= 200 && pm.response.code < 300) {",
+              "  pm.collectionVariables.set('personagem_id', pm.response.json().id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /campanhas",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/campanhas"
+      }
+    },
+    {
+      "name": "POST /campanhas",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/campanhas",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Travessia de Falken\",\n  \"personagemId\": {{personagem_id}},\n  \"livroId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code >= 200 && pm.response.code < 300) {",
+              "  pm.collectionVariables.set('campanha_id', pm.response.json().id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST /campanhas/{campanhaId}/narracoes",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "text/event-stream"
+          }
+        ],
+        "url": "{{base_url}}/campanhas/{{campanha_id}}/narracoes"
+      }
+    },
+    {
+      "name": "GET /campanhas/{campanhaId}/mensagens",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/campanhas/{{campanha_id}}/mensagens"
+      }
+    },
+    {
+      "name": "POST /campanhas/{campanhaId}/mensagens",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/campanhas/{{campanha_id}}/mensagens",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texto\": \"Converso com Lia.\",\n  \"requisicaoId\": \"{{$guid}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "GET /campanhas/{campanhaId}/memorias",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/campanhas/{{campanha_id}}/memorias"
+      }
+    },
+    {
+      "name": "POST /campanhas/{campanhaId}/memorias",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/campanhas/{{campanha_id}}/memorias",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Lia\",\n  \"texto\": \"Lia é uma aliada.\",\n  \"ativa\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code >= 200 && pm.response.code < 300) {",
+              "  pm.collectionVariables.set('memoria_id', pm.response.json().id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /configuracao",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/configuracao"
+      }
+    },
+    {
+      "name": "PATCH /configuracao",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/configuracao",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tom\": \"Sombrio\",\n  \"tamanhoResposta\": \"Média\",\n  \"criatividade\": 0.4\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "GET /saude",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/saude",
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "GET /livros",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/livros"
+      }
+    },
+    {
+      "name": "DELETE /campanhas/{campanhaId}",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/campanhas/{{campanha_id}}"
+      }
+    }
+  ]
+}

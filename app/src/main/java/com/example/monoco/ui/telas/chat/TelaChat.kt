@@ -26,7 +26,8 @@ fun TelaChat(campanha: Campanha, personagem: Personagem, livro: Livro,
     narrando: Boolean, narracaoEmOutraCampanha: Boolean, trechoNarracao: String,
     aoVoltar: () -> Unit, aoMemorias: () -> Unit, aoConfiguracoes: () -> Unit,
     aoSalvarComoMemoria: (Long) -> Unit, aoCarregarAnteriores: () -> Unit,
-    aoEnviar: (String, () -> Unit) -> Unit, aoParar: () -> Unit, aoTentarNovamente: () -> Unit) {
+    aoEnviar: (String, () -> Unit) -> Unit, aoParar: () -> Unit, aoTentarNovamente: () -> Unit,
+    rotuloNarrador: String = "Demonstração · sem IA", rotuloParar: String = "Parar narração") {
     var acao by rememberSaveable(campanha.id) { mutableStateOf("") }
     var verFicha by rememberSaveable { mutableStateOf(false) }
     val lista = rememberLazyListState()
@@ -42,7 +43,7 @@ fun TelaChat(campanha: Campanha, personagem: Personagem, livro: Livro,
     Column(Modifier.fillMaxSize().imePadding()) {
         Column(Modifier.padding(horizontal = 20.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             CabecalhoTela(campanha.titulo, "${personagem.nome} · ${livro.titulo}", aoVoltar)
-            Etiqueta("Narrador de demonstração · sem IA conectada")
+            Etiqueta(rotuloNarrador)
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 TextButton(onClick = { verFicha = true }) { Text("Ver ficha") }
                 TextButton(onClick = aoMemorias) { Text("Memórias ($quantidadeMemorias)") }
@@ -79,7 +80,7 @@ fun TelaChat(campanha: Campanha, personagem: Personagem, livro: Livro,
                 supportingText = { Text("${acao.length} / ${RegrasMonoco.LIMITE_ACAO}") },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(onSend = { enviar() }))
-            if (narrando) OutlinedButton(onClick = aoParar, modifier = Modifier.fillMaxWidth()) { Text("Parar narração") }
+            if (narrando) OutlinedButton(onClick = aoParar, modifier = Modifier.fillMaxWidth()) { Text(rotuloParar) }
             else Button(onClick = { enviar() }, enabled = envioHabilitado, modifier = Modifier.fillMaxWidth()) { Text("Enviar ação") }
         }
     }
@@ -105,7 +106,7 @@ private fun BalaoMensagem(texto: String, doJogador: Boolean, interrompida: Boole
             shape = MaterialTheme.shapes.large,
             color = if (doJogador) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surface) {
             Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Text(if (doJogador) "VOCÊ" else "NARRADOR LOCAL", style = MaterialTheme.typography.labelSmall,
+                Text(if (doJogador) "VOCÊ" else "MESTRE", style = MaterialTheme.typography.labelSmall,
                     color = if (doJogador) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary)
                 SelectionContainer { Text(texto, style = MaterialTheme.typography.bodyLarge) }
                 if (interrompida) Text("Narração interrompida · trecho salvo", style = MaterialTheme.typography.labelSmall)

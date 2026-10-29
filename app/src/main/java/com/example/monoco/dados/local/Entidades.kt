@@ -84,7 +84,6 @@ data class Memoria(
     val ativa: Boolean = true
 )
 
-// Este perfil pertence apenas à instalação local. Não representa uma conta autenticada.
 @Entity(tableName = "perfil_local")
 data class PerfilLocal(@PrimaryKey val id: Int = 1, val nome: String = "Aventureiro")
 
