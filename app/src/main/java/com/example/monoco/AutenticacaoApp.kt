@@ -5,14 +5,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.HasDefaultViewModelProviderFactory
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.compose.*
-import com.example.monoco.dados.RepositorioMonoco
-import com.example.monoco.dados.local.BancoMonoco
 import com.example.monoco.dados.remoto.*
 import com.example.monoco.ui.telas.boasvindas.TelaBoasVindas
 import com.example.monoco.ui.telas.cadastro.TelaCadastro
@@ -22,17 +21,15 @@ import kotlinx.coroutines.launch
 import java.net.URI
 
 @Composable
-fun MonocoApp(modifier: Modifier=Modifier) {
-    val contexto=LocalContext.current.applicationContext
-    val cofre=remember { SessaoSegura(contexto) }
-    var sessao by remember { mutableStateOf(cofre.ler()) }
+fun MonocoApp(cofre: SessaoSegura, api: ApiMonoco, modifier: Modifier=Modifier) {
+    val sessao by cofre.sessao.collectAsStateWithLifecycle()
+    val donoPrincipal = checkNotNull(LocalViewModelStoreOwner.current) as HasDefaultViewModelProviderFactory
     var ocupado by remember { mutableStateOf(false) }
     var configurarEndereco by remember { mutableStateOf(false) }
     var endereco by remember { mutableStateOf(cofre.endereco) }
     var erroEndereco by remember { mutableStateOf("") }
     val escopo=rememberCoroutineScope()
     val avisos=remember { SnackbarHostState() }
-    val api=remember { ApiMonoco(cofre) { escopo.launch { sessao=null } } }
     fun executar(acao: suspend ()->Unit) {
         if(ocupado) return
         ocupado=true
@@ -45,19 +42,21 @@ fun MonocoApp(modifier: Modifier=Modifier) {
     LaunchedEffect(sessao?.expiraEm) {
         sessao?.let {
             delay((it.expiraEm-System.currentTimeMillis()).coerceAtLeast(0))
-            cofre.limpar(); sessao=null; avisos.showSnackbar("Sessão expirada. Entre novamente.")
+            cofre.limpar(); avisos.showSnackbar("Sessão expirada. Entre novamente.")
         }
     }
     val conta=sessao
     if(conta!=null) {
         key(conta.usuario.id,conta.expiraEm) {
-            val banco=remember { BancoMonoco.paraConta(contexto,conta.usuario.id,cofre.endereco) }
-            val repositorio=remember { RepositorioMonoco(banco,api) }
-            val dono=remember { object: ViewModelStoreOwner { override val viewModelStore=ViewModelStore() } }
-            DisposableEffect(Unit) { onDispose { dono.viewModelStore.clear(); banco.close() } }
+            val dono=remember(donoPrincipal) { object: ViewModelStoreOwner, HasDefaultViewModelProviderFactory {
+                override val viewModelStore=ViewModelStore()
+                override val defaultViewModelProviderFactory=donoPrincipal.defaultViewModelProviderFactory
+                override val defaultViewModelCreationExtras=donoPrincipal.defaultViewModelCreationExtras
+            } }
+            DisposableEffect(dono) { onDispose { dono.viewModelStore.clear() } }
             CompositionLocalProvider(LocalViewModelStoreOwner provides dono) {
-                AplicativoConectado(repositorio,aoSair={ executar {
-                    try { api.sair() } finally { sessao=null }
+                AplicativoConectado(aoSair={ executar {
+                    api.sair()
                 } },modifier=modifier)
             }
         }
@@ -83,7 +82,7 @@ fun MonocoApp(modifier: Modifier=Modifier) {
                     }) }
                     composable("login") { TelaLogin(aoVoltar={ navegador.popBackStack() },
                         aoCadastrar={ navegador.navigate("cadastro") },aoEntrar={ email,senha ->
-                            executar { sessao=api.entrar(email,senha) }
+                            executar { api.entrar(email,senha) }
                         }) }
                 }
                 if(ocupado) LinearProgressIndicator(Modifier.align(Alignment.TopCenter).fillMaxWidth())

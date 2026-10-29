@@ -4,6 +4,11 @@ import android.content.Context
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
@@ -15,8 +20,16 @@ data class ContaOnline(val id: Long, val nome: String, val email: String)
 
 data class SessaoOnline(val token: String, val expiraEm: Long, val usuario: ContaOnline)
 
-class SessaoSegura(contexto: Context) {
+@Singleton
+class SessaoSegura @Inject constructor(@ApplicationContext contexto: Context) {
     private val preferencias = contexto.getSharedPreferences("sessao_online", Context.MODE_PRIVATE)
+    private val sessaoAtual = MutableStateFlow<SessaoOnline?>(null)
+    val sessao = sessaoAtual.asStateFlow()
+
+    init {
+        sessaoAtual.value = ler()
+    }
+
     var endereco: String
         get() = preferencias.getString("endereco", "http://10.0.2.2:8080/api/")!!
         set(valor) {
@@ -58,6 +71,7 @@ class SessaoSegura(contexto: Context) {
             .edit()
             .putString("sessao", Base64.encodeToString(dados, Base64.NO_WRAP))
             .apply()
+        sessaoAtual.value = sessao
     }
 
     fun ler(): SessaoOnline? =
@@ -99,5 +113,6 @@ class SessaoSegura(contexto: Context) {
 
     fun limpar() {
         preferencias.edit().remove("sessao").apply()
+        sessaoAtual.value = null
     }
 }

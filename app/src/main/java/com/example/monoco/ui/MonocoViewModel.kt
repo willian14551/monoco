@@ -3,13 +3,13 @@ package com.example.monoco.ui
 import com.example.monoco.dados.remoto.ConfiguracaoOnline
 import java.util.UUID
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.monoco.dados.RepositorioMonoco
 import com.example.monoco.dados.local.*
 import com.example.monoco.dominio.Narrador
-import com.example.monoco.dominio.NarradorDemonstracao
 import com.example.monoco.dominio.RegrasMonoco
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -47,9 +47,10 @@ data class EstadoMonoco(
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class MonocoViewModel(
+@HiltViewModel
+class MonocoViewModel @Inject constructor(
     private val repositorio: RepositorioMonoco,
-    private val narrador: Narrador = NarradorDemonstracao()
+    private val narrador: Narrador
 ) : ViewModel() {
     private val dao = repositorio.dao
     val emailOnline = MutableStateFlow("")
@@ -296,12 +297,4 @@ class MonocoViewModel(
     }
 
     fun pararNarracao() { tarefaNarracao?.cancel() }
-
-    class Fabrica(private val repositorio: RepositorioMonoco) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            require(modelClass.isAssignableFrom(MonocoViewModel::class.java))
-            @Suppress("UNCHECKED_CAST")
-            return MonocoViewModel(repositorio) as T
-        }
-    }
 }
