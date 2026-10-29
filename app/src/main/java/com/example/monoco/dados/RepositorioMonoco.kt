@@ -4,9 +4,12 @@ import androidx.room.withTransaction
 import com.example.monoco.dados.remoto.ApiMonoco
 import com.example.monoco.dados.local.*
 import com.example.monoco.dominio.*
+import dagger.hilt.android.scopes.ViewModelScoped
+import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 
-class RepositorioMonoco(private val banco: BancoMonoco, val api: ApiMonoco? = null) {
+@ViewModelScoped
+class RepositorioMonoco @Inject constructor(private val banco: BancoMonoco, val api: ApiMonoco? = null) {
     val dao = banco.monocoDao()
 
     suspend fun prepararCatalogo() {

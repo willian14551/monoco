@@ -5,6 +5,8 @@ import com.example.monoco.dados.local.*
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.UUID
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
@@ -23,7 +25,8 @@ data class ConfiguracaoOnline(
 
 data class HistoricoOnline(val mensagens: List<Mensagem>, val total: Int)
 
-class ApiMonoco(private val cofre: SessaoSegura, private val aoExpirar: () -> Unit) {
+@Singleton
+class ApiMonoco @Inject constructor(private val cofre: SessaoSegura) {
     private fun abrir(rota: String, metodo: String): HttpURLConnection {
         val url = URL(cofre.endereco + rota)
         require(url.protocol == "https" || (BuildConfig.DEBUG && url.protocol == "http")) {
@@ -51,7 +54,6 @@ class ApiMonoco(private val cofre: SessaoSegura, private val aoExpirar: () -> Un
         if (status !in 200..299) {
             if (status == 401) {
                 cofre.limpar()
-                aoExpirar()
             }
             val erro =
                 conexao.errorStream?.bufferedReader(Charsets.UTF_8)?.use { it.readText() }.orEmpty()
@@ -136,7 +138,6 @@ class ApiMonoco(private val cofre: SessaoSegura, private val aoExpirar: () -> Un
     suspend fun alterarSenha(atual: String, nova: String) {
         chamar("perfil/senha", "PUT", JSONObject().put("senhaAtual", atual).put("novaSenha", nova))
         cofre.limpar()
-        aoExpirar()
     }
 
     suspend fun configuracao() = chamar("configuracao")
