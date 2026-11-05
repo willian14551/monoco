@@ -19,7 +19,7 @@ fun CabecalhoTela(titulo: String, subtitulo: String? = null, aoVoltar: (() -> Un
 }
 
 @Composable
-fun AvisoLocal(texto: String = "Modo local · Seus dados ficam neste aparelho.") {
+fun AvisoInformativo(texto: String) {
     Surface(color = MaterialTheme.colorScheme.secondaryContainer,
         shape = MaterialTheme.shapes.medium, modifier = Modifier.fillMaxWidth()) {
         Text(texto, modifier = Modifier.padding(14.dp), style = MaterialTheme.typography.bodySmall,

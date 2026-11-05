@@ -30,7 +30,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.monoco.ui.theme.MonocoTheme
-import com.example.monoco.ui.componentes.AvisoLocal
 
 private const val TAMANHO_MINIMO_SENHA = 8
 
@@ -49,7 +48,6 @@ fun TelaCadastro(
     var erroEmail by rememberSaveable { mutableStateOf<String?>(null) }
     var erroSenha by rememberSaveable { mutableStateOf<String?>(null) }
     var erroConfirmacao by rememberSaveable { mutableStateOf<String?>(null) }
-    var formularioValidado by rememberSaveable { mutableStateOf(false) }
 
     fun formularioEstaValido(): Boolean {
         erroNome = if (nome.trim().length < 2) {
@@ -110,16 +108,11 @@ fun TelaCadastro(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        AvisoLocal("As contas online ainda não estão disponíveis.")
-
-        Spacer(modifier = Modifier.height(16.dp))
-
         OutlinedTextField(
             value = nome,
             onValueChange = {
                 nome = it
                 erroNome = null
-                formularioValidado = false
             },
             label = { Text("Nome") },
             singleLine = true,
@@ -138,7 +131,6 @@ fun TelaCadastro(
             onValueChange = {
                 email = it
                 erroEmail = null
-                formularioValidado = false
             },
             label = { Text("E-mail") },
             singleLine = true,
@@ -160,7 +152,6 @@ fun TelaCadastro(
             onValueChange = {
                 senha = it
                 erroSenha = null
-                formularioValidado = false
             },
             label = { Text("Senha") },
             singleLine = true,
@@ -183,7 +174,6 @@ fun TelaCadastro(
             onValueChange = {
                 confirmacaoSenha = it
                 erroConfirmacao = null
-                formularioValidado = false
             },
             label = { Text("Confirmar senha") },
             singleLine = true,
@@ -203,9 +193,7 @@ fun TelaCadastro(
 
         Button(
             onClick = {
-                formularioValidado = formularioEstaValido()
-
-                if (formularioValidado) {
+                if (formularioEstaValido()) {
                     aoCadastrar(nome.trim(), email.trim(), senha)
                 }
             },
@@ -214,15 +202,6 @@ fun TelaCadastro(
             Text(text = "Criar conta")
         }
 
-        if (formularioValidado) {
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Text(
-                text = "Campos válidos. Ainda não disponivel.",
-                color = MaterialTheme.colorScheme.primary,
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
     }
 }
 

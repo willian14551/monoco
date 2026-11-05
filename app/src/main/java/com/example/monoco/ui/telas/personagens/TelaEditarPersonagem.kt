@@ -32,7 +32,7 @@ fun TelaEditarPersonagem(personagem: Personagem?, salvando: Boolean, aoVoltar: (
         verticalArrangement = Arrangement.spacedBy(16.dp)) {
         CabecalhoTela(if (personagem == null) "Novo personagem" else "Editar personagem",
             "A ficha é livre: use os atributos que fizerem sentido para a sua história.", aoVoltar)
-        AvisoLocal("Você escolhe o que o mestre pode saber. Campos desmarcados ficam fora do contexto do narrador.")
+        AvisoInformativo("Você escolhe o que o mestre pode saber. Campos desmarcados ficam fora do contexto do narrador.")
         CampoFicha("Nome *", nome, { nome = it }, compartilharNome, { compartilharNome = it },
             erro = tentouSalvar && nome.isBlank())
         CampoFicha("Classe ou papel", classe, { classe = it }, compartilharClasse, { compartilharClasse = it })

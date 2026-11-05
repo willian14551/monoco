@@ -44,7 +44,7 @@ fun TelaPersonagens(personagens: List<Personagem>, campanhas: List<Campanha>,
             title = { Text("Personagem em campanha") },
             text = { Text("Há $vinculadas campanha(s) usando esta ficha. Exclua essas campanhas antes de remover o personagem.") },
             confirmButton = { TextButton(onClick = { excluirId = null }) { Text("Entendi") } })
-        else ConfirmarExclusao("Excluir personagem?", "Esta ficha será apagada deste aparelho.",
+        else ConfirmarExclusao("Excluir personagem?", "Esta ficha será excluída da sua conta.",
             aoCancelar = { excluirId = null }, aoConfirmar = { aoExcluir(id); excluirId = null })
     }
 }

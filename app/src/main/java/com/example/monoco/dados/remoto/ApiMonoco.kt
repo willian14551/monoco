@@ -27,8 +27,13 @@ data class HistoricoOnline(val mensagens: List<Mensagem>, val total: Int)
 
 @Singleton
 class ApiMonoco @Inject constructor(private val cofre: SessaoSegura) {
-    private fun abrir(rota: String, metodo: String): HttpURLConnection {
-        val url = URL(cofre.endereco + rota)
+    private fun abrir(
+        rota: String,
+        metodo: String,
+        endereco: String = cofre.endereco,
+        autenticar: Boolean = true,
+    ): HttpURLConnection {
+        val url = URL(ConfiguracaoServidor.normalizarEndereco(endereco) + rota)
         require(url.protocol == "https" || (BuildConfig.DEBUG && url.protocol == "http")) {
             "Use HTTPS para conectar ao servidor."
         }
@@ -37,7 +42,7 @@ class ApiMonoco @Inject constructor(private val cofre: SessaoSegura) {
             connectTimeout = 10_000
             readTimeout = 80_000
             setRequestProperty("Accept", "application/json")
-            cofre.ler()?.token?.let { setRequestProperty("Authorization", "Bearer $it") }
+            if (autenticar) cofre.ler()?.token?.let { setRequestProperty("Authorization", "Bearer $it") }
         }
     }
 
@@ -49,10 +54,10 @@ class ApiMonoco @Inject constructor(private val cofre: SessaoSegura) {
         }
     }
 
-    private fun verificar(conexao: HttpURLConnection) {
+    private fun verificar(conexao: HttpURLConnection, autenticar: Boolean = true) {
         val status = conexao.responseCode
         if (status !in 200..299) {
-            if (status == 401) {
+            if (status == 401 && autenticar) {
                 cofre.limpar()
             }
             val erro =
@@ -94,13 +99,30 @@ class ApiMonoco @Inject constructor(private val cofre: SessaoSegura) {
                     )
             } catch (e: java.io.IOException) {
                 throw Exception(
-                    "Não foi possível conectar. Confira dados endereço e se dados backend está ligado.",
+                    "Não foi possível acessar ${cofre.endereco}. Inicie o backend e confira o endereço em Servidor.",
                     e,
                 )
             } finally {
                 conexao.disconnect()
             }
         }
+
+    suspend fun verificarConexao(endereco: String = cofre.endereco) = withContext(Dispatchers.IO) {
+        val conexao = abrir("saude", "GET", endereco, autenticar = false)
+        conexao.connectTimeout = 3_000
+        conexao.readTimeout = 3_000
+        try {
+            verificar(conexao, autenticar = false)
+            val resposta = JSONObject(conexao.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() })
+            require(resposta.optString("status") == "ok" && resposta.optString("servico") == "monoco") {
+                "O endereço respondeu, mas não corresponde à API do Monoco."
+            }
+        } catch (erro: java.io.IOException) {
+            throw Exception("Não foi possível acessar $endereco. Inicie o backend e confira o endereço.", erro)
+        } finally {
+            conexao.disconnect()
+        }
+    }
 
     suspend fun cadastrar(nome: String, email: String, senha: String) {
         chamar(
@@ -185,7 +207,7 @@ class ApiMonoco @Inject constructor(private val cofre: SessaoSegura) {
     suspend fun memorias(campanhaId: Long) = listarTudo("campanhas/$campanhaId/memorias", ::memoria)
 
     suspend fun salvarPersonagem(personagem: Personagem) {
-        val preferencias =
+        val dadosPersonagem =
             JSONObject()
                 .put("nome", personagem.nome)
                 .put("classe", personagem.classe)
@@ -200,7 +222,7 @@ class ApiMonoco @Inject constructor(private val cofre: SessaoSegura) {
         chamar(
             if (personagem.id == 0L) "personagens" else "personagens/${personagem.id}",
             if (personagem.id == 0L) "POST" else "PUT",
-            preferencias,
+            dadosPersonagem,
         )
     }
 
@@ -305,7 +327,7 @@ class ApiMonoco @Inject constructor(private val cofre: SessaoSegura) {
                 }
                 resposta
                     ?: throw Exception(
-                        "A conexão foi interrompida. Atualize dados histórico ou tente novamente."
+                        "A conexão foi interrompida. Atualize o histórico ou tente novamente."
                     )
             } finally {
                 conexao.disconnect()

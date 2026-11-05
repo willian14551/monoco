@@ -14,4 +14,4 @@ JWT_SECRET=$(Novo-Segredo)
 ENCRYPTION_KEY=$(Novo-Segredo)
 DEMO_PERMITIDA=true
 "@ | Set-Content -Encoding ASCII .env
-Write-Host "Configuração criada. Agora execute: docker compose up --build"
+Write-Host "Arquivo .env criado com as configuracoes do backend."

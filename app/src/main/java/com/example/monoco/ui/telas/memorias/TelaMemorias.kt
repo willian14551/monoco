@@ -19,7 +19,7 @@ fun TelaMemorias(tituloCampanha: String, memorias: List<Memoria>, aoVoltar: () -
     var excluirId by rememberSaveable { mutableStateOf<Long?>(null) }
     LazyColumn(contentPadding = PaddingValues(24.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item { CabecalhoTela("Memórias", tituloCampanha, aoVoltar) }
-        item { AvisoLocal("Somente as memórias ativas entram no contexto da próxima narração.") }
+        item { AvisoInformativo("Somente as memórias ativas entram no contexto da próxima narração.") }
         item { Button(onClick = aoCriar, modifier = Modifier.fillMaxWidth()) { Text("+ Nova memória") } }
         if (memorias.isEmpty()) item {
             EstadoVazio("Guarde os fatos importantes", "Crie uma memória ou salve uma narração diretamente pelo chat.")

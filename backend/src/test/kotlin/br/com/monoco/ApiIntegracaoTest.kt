@@ -196,6 +196,16 @@ class ApiIntegracaoTest {
     }
 
     @Test
+    fun `saude e documentacao permanecem publicas`() {
+        val saude = chamar("GET", "/saude")
+        assertEquals("ok", saude["status"].asString())
+        assertEquals("monoco", saude["servico"].asString())
+        val documentacao = chamar("GET", "/v3/api-docs")
+        assertTrue(documentacao["paths"].has("/personagens"))
+        assertEquals("bearer", documentacao["components"]["securitySchemes"]["bearer"]["scheme"].asString())
+    }
+
+    @Test
     fun `cadastro valida dados e impede emails duplicados sem expor senha`() {
         val j = conta()
         val perfil = chamar("GET", "/perfil", j.token)

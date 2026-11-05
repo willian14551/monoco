@@ -22,7 +22,6 @@ import com.example.monoco.ui.telas.configuracao.TelaConfiguracao
 import com.example.monoco.ui.telas.livros.*
 import com.example.monoco.ui.telas.login.TelaLogin
 import com.example.monoco.ui.telas.memorias.*
-import com.example.monoco.ui.telas.perfil.TelaPerfil
 import com.example.monoco.ui.telas.personagens.*
 
 private object Rotas {
@@ -74,7 +73,7 @@ fun AplicativoConectado(aoSair: () -> Unit, modifier: Modifier = Modifier) {
         topBar = {
             Row(Modifier.fillMaxWidth().padding(horizontal=16.dp),horizontalArrangement=Arrangement.SpaceBetween,
                 verticalAlignment=Alignment.CenterVertically) {
-                Text("Monoco · conta online",style=MaterialTheme.typography.labelMedium)
+                Text("Monoco",style=MaterialTheme.typography.labelMedium)
                 TextButton(onClick=modelo::atualizarDados,enabled=!estado.operacao.salvando) { Text("Atualizar") }
             }
         },

@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
 set -eu
 cd "$(dirname "$0")"
-exec ./gradlew bootRun --args='--spring.profiles.active=local'
+printf '%s\n' 'Modo H2: http://localhost:8080/api/. Para MySQL, use o Docker.'
+exec sh ./gradlew --console=plain bootRun --args='--spring.profiles.active=local'

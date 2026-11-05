@@ -31,9 +31,13 @@ class SessaoSegura @Inject constructor(@ApplicationContext contexto: Context) {
     }
 
     var endereco: String
-        get() = preferencias.getString("endereco", "http://10.0.2.2:8080/api/")!!
+        get() = runCatching {
+            ConfiguracaoServidor.normalizarEndereco(
+                preferencias.getString("endereco", ConfiguracaoServidor.ENDERECO_PADRAO).orEmpty()
+            )
+        }.getOrDefault(ConfiguracaoServidor.ENDERECO_PADRAO)
         set(valor) {
-            preferencias.edit().putString("endereco", valor.trim().trimEnd('/') + "/").apply()
+            preferencias.edit().putString("endereco", ConfiguracaoServidor.normalizarEndereco(valor)).apply()
         }
 
     private fun chave(): SecretKey {

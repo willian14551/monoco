@@ -31,5 +31,11 @@ services:
       ENCRYPTION_KEY: ${ENCRYPTION_KEY:?Configure ENCRYPTION_KEY no arquivo .env}
       DEMO_PERMITIDA: ${DEMO_PERMITIDA:-true}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8080,http://localhost:5173}
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:8080/api/saude"]
+      interval: 5s
+      timeout: 3s
+      retries: 24
+      start_period: 30s
 volumes:
   dados_mysql:
