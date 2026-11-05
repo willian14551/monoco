@@ -21,7 +21,6 @@ fun TelaCampanhas(nomeJogador: String, campanhas: List<Campanha>, personagens: L
     var excluirId by rememberSaveable { mutableStateOf<Long?>(null) }
     LazyColumn(contentPadding = PaddingValues(24.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item { CabecalhoTela("Suas aventuras", "Bem-vindo, $nomeJogador. A próxima história começa com você.") }
-        item { AvisoLocal() }
         item { Button(onClick = aoNovaCampanha, modifier = Modifier.fillMaxWidth()) { Text("+ Nova campanha") } }
         if (campanhas.isEmpty()) item {
             EstadoVazio("Sua primeira história está por vir", "Crie um personagem, escolha uma aventura e comece a explorar.",

@@ -22,7 +22,6 @@ fun TelaDetalheLivro(livro: Livro, aoVoltar: () -> Unit, aoUsarLivro: () -> Unit
         Text(livro.regras)
         Text("O primeiro capítulo", style = MaterialTheme.typography.titleLarge)
         OutlinedCard { Text(livro.abertura, Modifier.padding(20.dp)) }
-        AvisoLocal("Aventura original de exemplo. Nesta versão, as respostas do chat são um roteiro de demonstração.")
         Button(onClick = aoUsarLivro, modifier = Modifier.fillMaxWidth()) { Text("Usar nesta campanha") }
     }
 }

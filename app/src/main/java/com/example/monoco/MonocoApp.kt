@@ -5,16 +5,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
-import com.example.monoco.dados.RepositorioMonoco
-import com.example.monoco.dados.local.BancoMonoco
 import com.example.monoco.ui.MonocoViewModel
 import com.example.monoco.ui.componentes.EstadoVazio
 import com.example.monoco.ui.telas.boasvindas.TelaBoasVindas
@@ -25,7 +22,6 @@ import com.example.monoco.ui.telas.configuracao.TelaConfiguracao
 import com.example.monoco.ui.telas.livros.*
 import com.example.monoco.ui.telas.login.TelaLogin
 import com.example.monoco.ui.telas.memorias.*
-import com.example.monoco.ui.telas.perfil.TelaPerfil
 import com.example.monoco.ui.telas.personagens.*
 
 private object Rotas {
@@ -54,8 +50,8 @@ private val abas = listOf(
 )
 
 @Composable
-fun AplicativoConectado(repositorio: RepositorioMonoco, aoSair: () -> Unit, modifier: Modifier = Modifier) {
-    val modelo: MonocoViewModel = viewModel(factory = MonocoViewModel.Fabrica(repositorio))
+fun AplicativoConectado(aoSair: () -> Unit, modifier: Modifier = Modifier) {
+    val modelo: MonocoViewModel = hiltViewModel()
     val estado by modelo.estado.collectAsStateWithLifecycle()
     val config by modelo.configuracaoOnline.collectAsStateWithLifecycle()
     val email by modelo.emailOnline.collectAsStateWithLifecycle()
@@ -77,7 +73,7 @@ fun AplicativoConectado(repositorio: RepositorioMonoco, aoSair: () -> Unit, modi
         topBar = {
             Row(Modifier.fillMaxWidth().padding(horizontal=16.dp),horizontalArrangement=Arrangement.SpaceBetween,
                 verticalAlignment=Alignment.CenterVertically) {
-                Text("Monoco · conta online",style=MaterialTheme.typography.labelMedium)
+                Text("Monoco",style=MaterialTheme.typography.labelMedium)
                 TextButton(onClick=modelo::atualizarDados,enabled=!estado.operacao.salvando) { Text("Atualizar") }
             }
         },

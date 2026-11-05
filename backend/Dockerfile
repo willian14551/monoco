@@ -8,7 +8,8 @@ RUN ./gradlew --no-daemon bootJar -x test
 
 FROM eclipse-temurin:21-jre
 WORKDIR /app
-RUN useradd --system --uid 10001 monoco && mkdir logs && chown monoco logs
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/* \
+    && useradd --system --uid 10001 monoco && mkdir logs && chown monoco logs
 COPY --from=compilacao /projeto/build/libs/monoco-backend-0.3.0.jar app.jar
 USER monoco
 EXPOSE 8080
